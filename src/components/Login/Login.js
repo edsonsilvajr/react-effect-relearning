@@ -13,9 +13,15 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    //DEBOUNCE
+    const handler = setTimeout(() => {
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+    return () => {
+      clearTimeout(handler);
+    };
   }, [enteredEmail, enteredPassword]); // UseEffect with dependencies, meaning UseEffect will run whenever those dependencies change
 
   const emailChangeHandler = (event) => {
